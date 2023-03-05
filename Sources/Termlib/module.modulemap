@@ -1,0 +1,5 @@
+module Termlib[system] {
+  header "../../Headers/Termlib.h"
+  link "termcap"
+  export *
+}
