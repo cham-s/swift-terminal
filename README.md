@@ -3,7 +3,7 @@
 Swift package containing utilities to help build applications using the terminal.
 They are essentially wrappers around C libraries (termios.h, termcap.h) arranged to be used in Swift.
 
-- Note: The code is experimental and not intend to be used in a production environment.
+- Note: The code is experimental and not intended to be used in a production environment.
 
 ## Terminal
 The Terminal module provides helpers to modifify the behavior of the terminal, such as:
