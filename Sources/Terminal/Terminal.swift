@@ -19,7 +19,7 @@ public struct Terminal {
       throw TermCapError.type("Terminal environment variable \(terminalEnvVariable) not found.")
     }
     
-    guard TermCap.entry(for: termtype) != nil else {
+    guard Termcap.entry(for: termtype) != nil else {
       throw TermCapError.entry("No database entry found for terminal \(terminalEnvVariable)")
     }
     

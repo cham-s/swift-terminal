@@ -56,7 +56,7 @@ public enum TermCapError: Error {
 
 
 // TODO: Maybe use class and save all buffers to be freed at deinit?
-public enum TermCap {
+public enum Termcap {
   
   /// Get the string value of a given terminal command.
   public static func string(for command: String) -> String? {
@@ -174,7 +174,7 @@ public enum TermCap {
   }
   
   public static func clearScreen() throws {
-    try TermCap.execute(
+    try Termcap.execute(
       [
         (.hideCursor, .origin, 1),
         (.clearScreen, .origin, 1),
@@ -184,7 +184,7 @@ public enum TermCap {
   }
 }
 
-extension TermCap {
+extension Termcap {
   /// Check if a given terminal type is available.
   public static func entry(for terminalType: String) -> String? {
 
