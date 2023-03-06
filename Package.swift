@@ -9,6 +9,7 @@ let package = Package(
     .library(name: "Terminal", targets: ["Terminal"]),
     .library(name: "Termlib", targets: ["Termlib"]),
     .library(name: "Termcaps", targets: ["Termcaps"]),
+    .executable(name: "Echo", targets: ["Echo"])
   ],
   dependencies: [
     .package(url: "https://github.com/apple/swift-system", from: "1.0.0"),
@@ -29,6 +30,13 @@ let package = Package(
       dependencies: [
         .product(name: "SystemPackage", package: "swift-system"),
         "Termlib"
+      ]
+    ),
+    .executableTarget(
+      name: "Echo",
+      dependencies: [
+        "Terminal",
+        "Termcaps"
       ]
     ),
   ]

@@ -20,6 +20,15 @@ public func terminalAttributes(
   return Termios(cTermios: current)
 }
 
+/// Get  attributes of the current session terminal in a shape of a Termios structure.
+public func terminalAttributes(
+  from fd: Int32
+) throws -> Termios {
+  var current = termios()
+  try tcgetattributes(fd, &current)
+  return Termios(cTermios: current)
+}
+
 /// Set attributes of the current session terminal.
 public func tcsetattributes(
   _ fd: Int32,

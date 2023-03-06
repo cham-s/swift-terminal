@@ -2,14 +2,18 @@ import Darwin
 import SystemPackage
 import Termcaps
 
+extension Int32 {
+  public static let standardInput = 0
+  public static let standardOutput = 1
+  public static let standardError = 2
+}
+
 public struct Terminal {
-  public var inputFd: FileDescriptor
   private var savedAttributes: Termios
   
   public init(
     attributes: Termios,
     option: ChangeOption,
-    inputFd: FileDescriptor = FileDescriptor.standardInput,
     terminalEnvVariable: String
   ) throws {
     var termtype = ""
@@ -23,14 +27,31 @@ public struct Terminal {
       throw TermCapError.entry("No database entry found for terminal \(terminalEnvVariable)")
     }
     
-    self.inputFd = inputFd
     self.savedAttributes = attributes
-    try setTerminalAttributes(from: self.inputFd, with: option, using: attributes)
+    try setTerminalAttributes(
+      from: FileDescriptor.standardInput,
+      with: option,
+      using: attributes
+    )
+  }
+  
+  public func print(_ str: String) throws -> Int {
+    try FileDescriptor.standardOutput.writeAll(str[...].utf8)
+  }
+  
+  public func print<S: Sequence>(
+    _ sequence: S
+  ) throws -> Int where S.Element == UInt8 {
+    try FileDescriptor.standardOutput.writeAll(sequence)
+  }
+  
+  public func read(into buffer: UnsafeMutableRawBufferPointer) throws -> Int {
+    try FileDescriptor.standardInput.read(into: buffer)
   }
   
   public func setAttributes(_ option: ChangeOption) throws {
     try setTerminalAttributes(
-      from: self.inputFd,
+      from: FileDescriptor.standardOutput,
       with: option,
       using: self.savedAttributes
     )
@@ -38,12 +59,18 @@ public struct Terminal {
   
   public func restoreSavedAttributes(_ option: ChangeOption) throws {
     try setTerminalAttributes(
-      from: self.inputFd,
+      from: FileDescriptor.standardOutput,
       with: option,
       using: self.savedAttributes
     )
   }
 }
+
+//#if canImport(SystemPackage)
+//extension Terminal {
+//  public init
+//}
+//#endif
 
 extension Terminal {
   /// Default Terminal using the TERM environment variable.

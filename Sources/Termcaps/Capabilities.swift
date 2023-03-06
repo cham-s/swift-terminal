@@ -161,9 +161,7 @@ public enum Termcap {
     )
   }
   
-  public static func execute(
-    _ commands: [FullCommand]
-  ) throws {
+  public static func execute(_ commands: [FullCommand]) throws {
     for c in commands {
       try Self.execute(
         c.command,
@@ -171,6 +169,10 @@ public enum Termcap {
         affectedLines: c.affectedLines
       )
     }
+  }
+  
+  public static func execute(_ commands: FullCommand...) throws {
+    try Self.execute(commands)
   }
   
   public static func clearScreen() throws {
