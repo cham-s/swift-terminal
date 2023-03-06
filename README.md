@@ -13,7 +13,7 @@ The Terminal module provides helpers to modifify the behavior of the terminal, s
   
 As an example the Terminal type can be used as a dependency to another type
 
-```Swift
+```swift
 import Terminal
 
 // Define standard file descriptors
@@ -50,6 +50,38 @@ The Termcaps library provides helpers to take advandages of the terminal capabil
  - Moving, hiding cursor
  - Cleaning the screen
  - And many more
+ 
+ ```swift
+import Termcaps
+
+/// Termcap is an enum acting as a namespace to host termcap commands to execute on the terminal
+/// `execute` is a convinient function for executing a list of commands.
+/// A FullCommand is tuple with:
+/// - a command
+/// - a location
+/// - a number of lines affected by the command
+
+// Clear the screen
+try Termcap.execute((.clearScreen, .origin, 1))
+
+let lines = ["Hello!\n", "Echo Your Thoughts:\n", "Press Escape to quit\n"]
+
+// Decorate and print the line
+try zip(lines, lines.indices)
+  .forEach { (line, i) in
+    if i == 1 {
+      // Activate reverse video
+      try Termcap.execute((.reverseVideoOn, .origin, 1))
+    }
+    try terminal.inputFd.writeAll(line[...].utf8)
+    if i == 1 {
+      // Desactivate all decoration
+      try Termcap.execute((.appeareanceModeOff, .origin, 1))
+    }
+  }
+
+
+ ```
  
 ### FootNotes
 
