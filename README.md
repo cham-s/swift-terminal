@@ -197,7 +197,3 @@ print("Bye!")
      
 — Excerpt from BSD 4 ```man termios```
 
-TODO: 
-  - Add more documentation
-  - Add more concrete runable examples
-
