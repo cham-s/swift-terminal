@@ -35,16 +35,19 @@ public struct Terminal {
     )
   }
   
+  @discardableResult
   public func print(_ str: String) throws -> Int {
     try FileDescriptor.standardOutput.writeAll(str[...].utf8)
   }
   
+  @discardableResult
   public func print<S: Sequence>(
     _ sequence: S
   ) throws -> Int where S.Element == UInt8 {
     try FileDescriptor.standardOutput.writeAll(sequence)
   }
   
+  @discardableResult
   public func read(into buffer: UnsafeMutableRawBufferPointer) throws -> Int {
     try FileDescriptor.standardInput.read(into: buffer)
   }

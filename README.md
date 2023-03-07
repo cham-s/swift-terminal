@@ -71,7 +71,7 @@ try zip(lines, lines.indices)
       // Activate reverse video
       try Termcap.execute((.reverseVideoOn, .origin, 1))
     }
-    _ = try terminal.print(line)
+    try terminal.print(line)
     if i == 1 {
       // Deactivate reverse video
       try Termcap.execute((.appeareanceModeOff, .origin, 1))
@@ -120,7 +120,7 @@ struct EchoApp {
     defer { buffer.deallocate() }
     reading: while true {
       buffer.initializeMemory(as: UInt8.self, repeating: .zero)
-      _ = try self.terminal.read(into: buffer)
+      try self.terminal.read(into: buffer)
       
       let bytes = buffer.prefix(while: { $0 != 0 })
       let action = ActionCharacter(bytes.filter { $0 != 0 })
@@ -132,7 +132,7 @@ struct EchoApp {
         // Ignore the input
         break
       case let .printable(bts):
-        _ = try self.terminal.print(bts)
+        try self.terminal.print(bts)
       }
     }
     
@@ -153,7 +153,7 @@ struct EchoApp {
         if i == 1 {
           try Termcap.execute((.reverseVideoOn, .origin, 1))
         }
-        _ = try self.terminal.print(line)
+        try self.terminal.print(line)
         if i == 1 {
           try Termcap.execute((.appeareanceModeOff, .origin, 1))
         }
