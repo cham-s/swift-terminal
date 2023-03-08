@@ -20,14 +20,14 @@ public func currentEnvironment() -> [String: String] {
   }
 }
 
-/// Get the value of a given environment variable.
+/// Gets the value of a given environment variable.
 public func getEnvironmentValue(for key: String) throws -> String {
   try fromCFunctionNullStringError(name: "getenv") {
     getenv(key)
   }
 }
 
-/// Set the a value for a given environment variable.
+/// Sets the a value for a given environment variable.
 public func setEnvironmentValue(
   _ v: String,
   for key: String,
@@ -38,7 +38,7 @@ public func setEnvironmentValue(
   }
 }
 
-/// Unset the a value for a given environment variable.
+/// Unsets the a value for a given environment variable.
 public func unsetEnvironmentValue(for key: String) throws {
   try fromCFunctionError(name: "unsetenv") {
     unsetenv(key)

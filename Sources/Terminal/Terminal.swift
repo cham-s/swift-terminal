@@ -69,12 +69,6 @@ public struct Terminal {
   }
 }
 
-//#if canImport(SystemPackage)
-//extension Terminal {
-//  public init
-//}
-//#endif
-
 extension Terminal {
   /// Default Terminal using the TERM environment variable.
   public static func term(attributes: Termios) throws -> Self {

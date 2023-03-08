@@ -1,7 +1,7 @@
 import Darwin
 import SystemPackage
 
-/// Get  attributes of the current session terminal.
+/// Gets attributes of the current session terminal.
 public func tcgetattributes(
   _ fd: Int32,
   _ termios: UnsafeMutablePointer<termios>!
@@ -11,7 +11,7 @@ public func tcgetattributes(
   }
 }
 
-/// Get  attributes of the current session terminal in a shape of a Termios structure.
+/// Gets  attributes of the current session terminal in a shape of a Termios structure.
 public func terminalAttributes(
   from fd: FileDescriptor
 ) throws -> Termios {
@@ -20,7 +20,7 @@ public func terminalAttributes(
   return Termios(cTermios: current)
 }
 
-/// Get  attributes of the current session terminal in a shape of a Termios structure.
+/// Gets  attributes of the current session terminal in a shape of a Termios structure.
 public func terminalAttributes(
   from fd: Int32
 ) throws -> Termios {
@@ -29,7 +29,7 @@ public func terminalAttributes(
   return Termios(cTermios: current)
 }
 
-/// Set attributes of the current session terminal.
+/// Sets attributes of the current session terminal.
 public func tcsetattributes(
   _ fd: Int32,
   _ option: Int32,
