@@ -22,7 +22,7 @@ As an example the Terminal type can be used as a dependency to another type
 ```swift
 import Terminal
 
-// Get the attributes from the current session terminal
+// Gets the attributes from the current session terminal
 var attributes = try terminalAttributes(from: .standardInput)
 
 // The `disable` operator takes a list of options to be disabled.

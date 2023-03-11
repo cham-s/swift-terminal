@@ -10,6 +10,10 @@ public enum Command: String {
   case moveCursor = "cm"
   /// Hide the cursor.
   case hideCursor = "vi"
+  /// Move cursor to home position (upper left corner).
+  case movehome = "ho"
+  /// Move the cursor to the lower left.
+  case moveLowerLeft = "ll"
   /// DispalyCursor.
   case displayCursor = "ve"
   /// Move to last saved cursor position.
@@ -54,11 +58,10 @@ public enum TermCapError: Error {
   case putString(String)
 }
 
-
 // TODO: Maybe use class and save all buffers to be freed at deinit?
 public enum Termcap {
   
-  /// Get the string value of a given terminal command.
+  /// Gets the string value of a given terminal command.
   public static func string(for command: String) -> String? {
     var buffer = [UnsafeMutablePointer<CChar>?]()
     var id = command
@@ -66,13 +69,13 @@ public enum Termcap {
       .map { String(cString: $0) }
   }
   
-  /// Get the flag value of a given terminal capability.
+  /// Gets the flag value of a given terminal capability.
   public static func flag(for id: String) -> Bool {
     var mutableId = id
     return tgetflag(&mutableId) == 1 ? true : false
   }
   
-  /// Get the numeric value of a given terminal capability.
+  /// Gets the numeric value of a given terminal capability.
   public static func numeric(for id: String) -> Int? {
     var mutableId = id
     let value = tgetnum(&mutableId)
@@ -82,7 +85,7 @@ public enum Termcap {
     return Int(value)
   }
   
-  /// Get the numeric value of a given terminal capability.
+  /// Gets the numeric value of a given terminal capability.
   /// - Note: This overload uses the Command type instead of plain String.
   public static func numeric(for id: Command) -> Int? {
     var mutableId = id.rawValue
